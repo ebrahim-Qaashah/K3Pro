@@ -1,6 +1,3 @@
-# Exclude example app
-example/
-
 # Dart/Flutter generated files
 .dart_tool/
 .packages
@@ -8,6 +5,21 @@ build/
 pubspec.lock
 .flutter-plugins
 .flutter-plugins-dependencies
+
+# Example app build folders
+example/build/
+example/.dart_tool/
+example/android/build/
+example/ios/build/
+example/.flutter-plugins
+example/.flutter-plugins-dependencies
+
+# Gradle cache and local files
+example/android/.gradle/
+example/android/local.properties
+example/android/gradle/
+*.lock
+*.bin
 
 # IDE files
 .idea/

@@ -1,0 +1,23 @@
+name: smt_sensor_example
+description: Example app for SMT Sensor package
+version: 1.0.0
+publish_to: 'none'
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  smt_sensor:
+    path: ../
+  permission_handler: ^11.0.0
+  usb_serial: ^0.5.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true

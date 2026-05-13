@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ESP32 USB devices -->
+    <usb-device vendor-id="4292" />
+    <!-- CH340 USB-Serial -->
+    <usb-device vendor-id="6790" />
+    <!-- FTDI USB-Serial -->
+    <usb-device vendor-id="1027" />
+    <!-- CP210x USB-Serial -->
+    <usb-device vendor-id="4292" />
+</resources>
