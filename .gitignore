@@ -1,0 +1,20 @@
+# Exclude example app
+example/
+
+# Dart/Flutter generated files
+.dart_tool/
+.packages
+build/
+pubspec.lock
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+*.swp
+
+# OS files
+.DS_Store
+Thumbs.db
