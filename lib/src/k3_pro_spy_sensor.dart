@@ -40,14 +40,14 @@ class K3ProSpySensor {
       final cp2104Devices = await getCP2104Devices();
       
       if (cp2104Devices.isEmpty) {
-        _errorController.add('No CP2104 devices found (VID:0x10C4, PID:0xEA60)');
+        //_errorController.add('No CP2104 devices found (VID:0x10C4, PID:0xEA60)');
         return false;
       }
 
-      _errorController.add('Found ${cp2104Devices.length} CP2104 device(s), scanning...');
+      //_errorController.add('Found ${cp2104Devices.length} CP2104 device(s), scanning...');
 
       for (var device in cp2104Devices) {
-        _errorController.add('Trying device: ${device.deviceName}...');
+        //_errorController.add('Trying device: ${device.deviceName}...');
         
         final connected = await connect(device, baudRate: baudRate);
         if (!connected) {
@@ -59,18 +59,18 @@ class K3ProSpySensor {
         final nameData = await getName();
         
         if (nameData?.mType == TARGET_SENSOR_NAME) {
-          _errorController.add('Found K3ProSpy sensor on ${device.deviceName}');
+          //_errorController.add('Found K3ProSpy sensor on ${device.deviceName}');
           return true;
         } else {
-          _errorController.add('Device ${device.deviceName} is not K3ProSpy (got: ${nameData?.mType ?? "no response"}), disconnecting...');
+          //_errorController.add('Device ${device.deviceName} is not K3ProSpy (got: ${nameData?.mType ?? "no response"}), disconnecting...');
           await disconnect();
         }
       }
 
-      _errorController.add('K3ProSpy sensor not found on any CP2104 device');
+      //_errorController.add('K3ProSpy sensor not found on any CP2104 device');
       return false;
     } catch (e) {
-      _errorController.add('Auto-connect error: $e');
+      //_errorController.add('Auto-connect error: $e');
       return false;
     }
   }
@@ -79,13 +79,13 @@ class K3ProSpySensor {
     try {
       _port = await device.create();
       if (_port == null) {
-        _errorController.add('Failed to create USB port');
+        //_errorController.add('Failed to create USB port');
         return false;
       }
 
       bool openResult = await _port!.open();
       if (!openResult) {
-        _errorController.add('Failed to open USB port');
+       // _errorController.add('Failed to open USB port');
         return false;
       }
 
@@ -103,7 +103,7 @@ class K3ProSpySensor {
           _onDataReceived(utf8.decode(data));
         },
         onError: (error) {
-          _errorController.add('USB read error: $error');
+         // _errorController.add('USB read error: $error');
         },
       );
 
@@ -111,7 +111,7 @@ class K3ProSpySensor {
       _connectedDevice = device;
       return true;
     } catch (e) {
-      _errorController.add('Connection error: $e');
+      //_errorController.add('Connection error: $e');
       return false;
     }
   }
@@ -130,7 +130,7 @@ class K3ProSpySensor {
           final sensorData = SensorData.fromJson(json);
           _dataController.add(sensorData);
         } catch (e) {
-          _errorController.add('JSON parse error: $e');
+          //_errorController.add('JSON parse error: $e');
         }
       }
     }
@@ -138,7 +138,7 @@ class K3ProSpySensor {
 
   Future<void> sendCommand(SensorCommand command) async {
     if (_port == null || !_isConnected) {
-      _errorController.add('Not connected to device');
+      //_errorController.add('Not connected to device');
       return;
     }
 
@@ -146,7 +146,7 @@ class K3ProSpySensor {
       String commandStr = '${command.command}\n';
       await _port!.write(Uint8List.fromList(utf8.encode(commandStr)));
     } catch (e) {
-      _errorController.add('Send command error: $e');
+      //_errorController.add('Send command error: $e');
     }
   }
 
@@ -169,7 +169,7 @@ class K3ProSpySensor {
     try {
       return await dataStream.first.timeout(timeout);
     } on TimeoutException {
-      _errorController.add('Response timeout');
+      //_errorController.add('Response timeout');
       return null;
     }
   }
