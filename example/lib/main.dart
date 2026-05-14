@@ -97,6 +97,22 @@ class _SensorPageState extends State<SensorPage> {
     await K3Thermometer.sendCommand(command);
   }
 
+  Future<void> _readValue() async {
+    if (!K3Thermometer.isConnected) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Not connected to device')),
+      );
+      return;
+    }
+
+    final data = await K3Thermometer.getValue();
+    if (data != null && data.mVal != null) {
+      setState(() {
+        _sensorValue = data.mVal;
+      });
+    }
+  }
+
   @override
   void dispose() {
     K3Thermometer.dispose();
@@ -183,9 +199,14 @@ class _SensorPageState extends State<SensorPage> {
                   onPressed: () => _sendCommand(SensorCommand.getName),
                   child: const Text('Get Name'),
                 ),
-                ElevatedButton(
-                  onPressed: () => _sendCommand(SensorCommand.getValue),
-                  child: const Text('Get Value'),
+                ElevatedButton.icon(
+                  onPressed: _readValue,
+                  icon: const Icon(Icons.refresh),
+                  label: const Text('Read'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    foregroundColor: Colors.white,
+                  ),
                 ),
               ],
             ),
