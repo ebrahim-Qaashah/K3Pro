@@ -37,16 +37,16 @@ class K3ProSpySensor {
 
   Future<bool> autoConnect({int baudRate = 115200}) async {
     try {
-      final cp2104Devices = await getCP2104Devices();
+      final devices = await getAvailableDevices();
       
-      if (cp2104Devices.isEmpty) {
-        //_errorController.add('No CP2104 devices found (VID:0x10C4, PID:0xEA60)');
+      if (devices.isEmpty) {
+        //_errorController.add('No USB devices found');
         return false;
       }
 
-      //_errorController.add('Found ${cp2104Devices.length} CP2104 device(s), scanning...');
+      //_errorController.add('Found ${devices.length} USB device(s), scanning...');
 
-      for (var device in cp2104Devices) {
+      for (var device in devices) {
         //_errorController.add('Trying device: ${device.deviceName}...');
         
         final connected = await connect(device, baudRate: baudRate);
@@ -67,7 +67,7 @@ class K3ProSpySensor {
         }
       }
 
-      //_errorController.add('K3ProSpy sensor not found on any CP2104 device');
+      //_errorController.add('K3ProSpy sensor not found on any USB device');
       return false;
     } catch (e) {
       //_errorController.add('Auto-connect error: $e');
