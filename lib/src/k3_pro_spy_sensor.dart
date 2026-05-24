@@ -17,6 +17,8 @@ class K3ProSpySensor {
   
   static const int CP2104_VID = 0x10C4;
   static const int CP2104_PID = 0xEA60;
+  static const int ESP32C3_VID = 0x303A;  // Espressif VID
+  static const int ESP32C3_PID = 0x1001;  // ESP32-C3 native USB PID
   static const String TARGET_SENSOR_NAME = 'K3ProSpy';
 
   Stream<SensorData> get dataStream => _dataController.stream;
@@ -35,16 +37,23 @@ class K3ProSpySensor {
     }).toList();
   }
 
+  Future<List<UsbDevice>> getNonC3Devices() async {
+    final allDevices = await UsbSerial.listDevices();
+    return allDevices.where((device) {
+      return !(device.vid == ESP32C3_VID && device.pid == ESP32C3_PID);
+    }).toList();
+  }
+
   Future<bool> autoConnect({int baudRate = 115200}) async {
     try {
-      final devices = await getAvailableDevices();
+      final devices = await getNonC3Devices();
       
       if (devices.isEmpty) {
-        //_errorController.add('No USB devices found');
+        //_errorController.add('No non-C3 USB devices found');
         return false;
       }
 
-      //_errorController.add('Found ${devices.length} USB device(s), scanning...');
+      //_errorController.add('Found ${devices.length} non-C3 USB device(s), scanning...');
 
       for (var device in devices) {
         //_errorController.add('Trying device: ${device.deviceName}...');
