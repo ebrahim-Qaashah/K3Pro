@@ -44,7 +44,7 @@ class K3ProSpySensor {
     }).toList();
   }
 
-  Future<bool> autoConnect({int baudRate = 115200}) async {
+  Future<bool> autoConnect({int baudRate = 19200}) async {
     try {
       final devices = await getNonC3Devices();
       
@@ -84,7 +84,7 @@ class K3ProSpySensor {
     }
   }
 
-  Future<bool> connect(UsbDevice device, {int baudRate = 115200}) async {
+  Future<bool> connect(UsbDevice device, {int baudRate = 19200}) async {
     try {
       _port = await device.create();
       if (_port == null) {
