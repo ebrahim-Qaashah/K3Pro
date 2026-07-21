@@ -63,8 +63,8 @@ class K3ProSpySensor {
           continue;
         }
 
-        await Future.delayed(const Duration(milliseconds: 500));
-        
+        await Future.delayed(const Duration(milliseconds: 2000));
+        /*
         final nameData = await getName();
         
         if (nameData?.mType == TARGET_SENSOR_NAME) {
@@ -74,6 +74,7 @@ class K3ProSpySensor {
           //_errorController.add('Device ${device.deviceName} is not K3ProSpy (got: ${nameData?.mType ?? "no response"}), disconnecting...');
           await disconnect();
         }
+        */
       }
 
       //_errorController.add('K3ProSpy sensor not found on any USB device');
