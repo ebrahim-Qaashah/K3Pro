@@ -99,7 +99,7 @@ class K3ProSpySensor {
       }
 
     await _port!.setDTR(false);
-    await _port!.setRTS(false);
+    await _port!.setRTS(true);
       await _port!.setPortParameters(
         baudRate,
         UsbPort.DATABITS_8,
