@@ -106,7 +106,7 @@ class K3ProSpySensor {
         UsbPort.STOPBITS_1,
         UsbPort.PARITY_NONE,
       );
-
+await Future.delayed(const Duration(seconds: 2));
       _subscription = _port!.inputStream?.listen(
         (Uint8List data) {
           _onDataReceived(utf8.decode(data));
